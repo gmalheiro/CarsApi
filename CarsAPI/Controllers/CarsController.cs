@@ -1,6 +1,5 @@
 ﻿using CarsAPI.Context;
 using CarsAPI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarsAPI.Controllers
@@ -36,6 +35,19 @@ namespace CarsAPI.Controllers
                 return NotFound("Car not found...");
             
             return Ok(car);
+        }
+        
+        [HttpPost]
+        public ActionResult Post(Car car)
+        {
+            if(car is null)
+                return BadRequest("Car is null");
+
+            _context?.Cars?.Add(car);
+            _context?.SaveChanges();
+            
+            return new CreatedAtRouteResult("GetCarById",
+                new {id = car.CarId},car);
         }
     }
 }
