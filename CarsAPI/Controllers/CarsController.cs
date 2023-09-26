@@ -65,6 +65,20 @@ namespace CarsAPI.Controllers
 
         }
 
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            var car = _context?.Cars?.FirstOrDefault(car=> car.CarId == id);
+
+            if (car is null)
+                return BadRequest("car not found");
+
+            _context?.Cars?.Remove(car);
+            _context?.SaveChanges();
+
+            return Ok(car);
+
+        }
         
     }
 }
