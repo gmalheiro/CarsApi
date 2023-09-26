@@ -49,5 +49,22 @@ namespace CarsAPI.Controllers
             return new CreatedAtRouteResult("GetCarById",
                 new {id = car.CarId},car);
         }
+        
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id, Car car)
+        {
+            if (id != car.CarId)
+            {
+                return BadRequest("Car not found");
+            }
+
+            _context!.Entry(car).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.SaveChanges(true);
+
+            return Ok(car);
+
+        }
+
+        
     }
 }
