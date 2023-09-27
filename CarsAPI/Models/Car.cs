@@ -18,10 +18,13 @@ public class Car
     [StringLength(50, ErrorMessage = "Brand Name cannot be longer than {1} characters .")]
     public string? Brand { get; set; }
     
+    [Required]
     public string? Year { get; set; }
+    
     [JsonIgnore]
     public Category? Category{ get; set; }
     
+    [Required]
     public int CategoryId  { get; set; }
 
 }
