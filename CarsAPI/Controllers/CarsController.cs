@@ -1,6 +1,7 @@
 ﻿using CarsAPI.Context;
 using CarsAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarsAPI.Controllers
 {
@@ -26,10 +27,10 @@ namespace CarsAPI.Controllers
             return Ok(cars);
         }
 
-        [HttpGet("{id:int}",Name = "GetCarById")]
-        public ActionResult <Car> Get(int id)
+        [HttpGet("{id:int:min(1)}",Name = "GetCarById")]
+        public async Task<ActionResult <Car>> GetByIdAsync([FromQuery]int id)
         {
-            var car = _context?.Cars?.FirstOrDefault(car => car.CarId == id);
+            var car = await _context?.Cars?.AsNoTracking()?.FirstOrDefaultAsync(car => car.CarId == id)!;
 
             if (car is null)
                 return NotFound("Car not found...");
