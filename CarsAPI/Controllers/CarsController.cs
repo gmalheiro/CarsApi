@@ -17,9 +17,9 @@ namespace CarsAPI.Controllers
         }
 
         [HttpGet("GetCars")]
-        public ActionResult <IEnumerable<Car>> Get()
+        public async Task<ActionResult <IEnumerable<Car>>> Get()
         {
-            var cars = _context?.Cars?.ToList();
+            var cars = await _context?.Cars?.AsNoTracking().ToListAsync()!;
 
             if (cars is null)
                 return NotFound();
