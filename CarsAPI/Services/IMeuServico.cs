@@ -2,5 +2,6 @@
 {
     public interface IMeuServico
     {
+        string? saudacao(string nome);
     }
 }
