@@ -1,6 +1,7 @@
 using CarsAPI.Context;
 using CarsAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarsAPI.Controllers
 {
@@ -16,10 +17,10 @@ namespace CarsAPI.Controllers
         }
 
         [HttpGet("GetCategories")]
-        public ActionResult <IEnumerable<Category>> Get()
+        public async Task <ActionResult <IEnumerable<Category>>> Get()
         {
-            var categories = _context?.Categories?.ToList();
-
+            var categories = await _context?.Categories?.AsNoTracking().ToListAsync()!;
+            
             if (categories is null)
                 return NotFound();
 
@@ -27,9 +28,9 @@ namespace CarsAPI.Controllers
         }
 
         [HttpGet("{id:int}",Name = "GetCategoryById")]
-        public ActionResult <Category> Get(int id)
+        public async Task <ActionResult <Category>> Get(int id)
         {
-            var category = _context?.Categories?.FirstOrDefault(c => c.CategoryId == id);
+            var category = await _context?.Categories?.FirstOrDefaultAsync(c => c.CategoryId == id)!;
          
             if (category is null)
                 return NotFound("Category not found...");
