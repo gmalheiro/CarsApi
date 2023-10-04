@@ -1,4 +1,5 @@
 using CarsAPI.Context;
+using CarsAPI.Filters;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddSwaggerGen();
 string sqlConnection = builder.Configuration.GetConnectionString("DbConn");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(sqlConnection));
+
+builder.Services.AddScoped<ApiLoggingFilter, ApiLoggingFilter>();
 
 var app = builder.Build();
 
