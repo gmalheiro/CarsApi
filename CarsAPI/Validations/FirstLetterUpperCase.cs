@@ -14,7 +14,7 @@ namespace CarsAPI.Validations
             var primeiraLetra = value.ToString();
             if (primeiraLetra != primeiraLetra?.ToUpper())
             {
-                return new ValidationResult("A primeira letra do nome deve ser maiúscula");
+                return new ValidationResult("The first letter must be uppercase");
             }
             return ValidationResult.Success!;
         }
